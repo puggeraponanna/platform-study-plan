@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Planner — Kanban</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <span class="logo">📚</span>
+      <div>
+        <h1 class="header-title">Platform Engineering Study Plan</h1>
+        <p class="header-sub">DevOps → Platform Engineer Transition · 1-hour Focused Sessions</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn-add-card" id="globalAddBtn">+ Add Card</button>
+      <div class="progress-pill">
+        <span class="progress-label">Progress</span>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+        <span class="progress-pct" id="progressPct">0%</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Guidelines Banner -->
+  <div class="guidelines" id="guidelines">
+    <div class="guidelines-header" id="guidelinesToggle">
+      <span class="guidelines-icon">🧭</span>
+      <span class="guidelines-title">Study Guidelines &amp; Strategy</span>
+      <span class="guidelines-chevron" id="guidelinesChevron">▼</span>
+    </div>
+    <div class="guidelines-body" id="guidelinesBody">
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-card-title">🎯 Role Focus</div>
+          <p>Target <strong>Platform Engineer / Senior DevOps / Cloud Infrastructure Engineer</strong>. Emphasize building reusable infrastructure, automation, CI/CD platforms, and developer enablement — not incident-heavy SRE.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-card-title">⏱ 1-Hour Session Protocol</div>
+          <ul>
+            <li>✅ Pick ONE card from the "To Study" column</li>
+            <li>✅ Set a timer for 60 minutes</li>
+            <li>✅ Complete the core task + take 1 note</li>
+            <li>✅ Move card to "Done" and log progress</li>
+          </ul>
+        </div>
+        <div class="guide-card">
+          <div class="guide-card-title">✍️ Resume Bullet Rules</div>
+          <ul>
+            <li>Use <strong>Built / Automated / Designed / Standardized</strong> over Managed / Supported</li>
+            <li>Format: <em>Action + System + Impact</em></li>
+            <li>Add metrics: frequency, time saved, environments, failure reduction</li>
+            <li>Lead with 6+ years cloud engineering &amp; Terraform-driven AWS</li>
+          </ul>
+        </div>
+        <div class="guide-card">
+          <div class="guide-card-title">🧠 Platform Mindset</div>
+          <ul>
+            <li>Build once, reuse across teams</li>
+            <li>Standardize environments and release paths</li>
+            <li>Reduce manual work and ticket dependency</li>
+            <li>Improve developer experience</li>
+            <li>Create safe defaults and templates</li>
+          </ul>
+        </div>
+        <div class="guide-card">
+          <div class="guide-card-title">📬 Weekly Outreach Target</div>
+          <ul>
+            <li>📄 15–20 tailored applications</li>
+            <li>💬 5 recruiter messages</li>
+            <li>🤝 5 referral requests</li>
+            <li>🔁 2 follow-ups on prior applications</li>
+          </ul>
+        </div>
+        <div class="guide-card">
+          <div class="guide-card-title">🚫 Roles to Avoid</div>
+          <p>Skip roles heavy in: <em>on-call, L3 support, NOC, ops-heavy maintenance</em>. Look for: <strong>Terraform, AWS, IaC, automation, platform, CI/CD, Kubernetes, internal tooling, developer experience</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Board -->
+  <main class="board" id="board">
+
+    <div class="column" data-col="todo">
+      <div class="col-header">
+        <span class="col-dot dot-todo"></span>
+        <span class="col-title">To Study</span>
+        <span class="col-count" id="count-todo">0</span>
+        <button class="col-add-btn" data-col="todo">+</button>
+      </div>
+      <div class="cards" id="cards-todo"></div>
+    </div>
+
+    <div class="column" data-col="inprogress">
+      <div class="col-header">
+        <span class="col-dot dot-inprogress"></span>
+        <span class="col-title">In Progress</span>
+        <span class="col-count" id="count-inprogress">0</span>
+        <button class="col-add-btn" data-col="inprogress">+</button>
+      </div>
+      <div class="cards" id="cards-inprogress"></div>
+    </div>
+
+    <div class="column" data-col="review">
+      <div class="col-header">
+        <span class="col-dot dot-review"></span>
+        <span class="col-title">Review</span>
+        <span class="col-count" id="count-review">0</span>
+        <button class="col-add-btn" data-col="review">+</button>
+      </div>
+      <div class="cards" id="cards-review"></div>
+    </div>
+
+    <div class="column" data-col="done">
+      <div class="col-header">
+        <span class="col-dot dot-done"></span>
+        <span class="col-title">Done</span>
+        <span class="col-count" id="count-done">0</span>
+        <button class="col-add-btn" data-col="done">+</button>
+      </div>
+      <div class="cards" id="cards-done"></div>
+    </div>
+
+  </main>
+
+  <!-- Card Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <div class="modal-tag" id="modalTag"></div>
+        <div class="modal-actions">
+          <button class="modal-btn-delete" id="modalDelete">🗑</button>
+          <button class="modal-close" id="modalClose">✕</button>
+        </div>
+      </div>
+      <input class="modal-title-input" id="modalTitle" placeholder="Topic title…" />
+      <div class="modal-meta">
+        <label>Subject</label>
+        <input class="modal-subject-input" id="modalSubject" placeholder="e.g. Mathematics" />
+        <label>Time Estimate</label>
+        <input class="modal-time-input" id="modalTime" placeholder="e.g. 2h 30m" />
+        <label>Priority</label>
+        <select class="modal-priority" id="modalPriority">
+          <option value="low">🟢 Low</option>
+          <option value="medium">🟡 Medium</option>
+          <option value="high">🔴 High</option>
+        </select>
+        <label>Column</label>
+        <select class="modal-col-select" id="modalCol">
+          <option value="todo">To Study</option>
+          <option value="inprogress">In Progress</option>
+          <option value="review">Review</option>
+          <option value="done">Done</option>
+        </select>
+      </div>
+      <label class="modal-label">Description</label>
+      <textarea class="modal-desc" id="modalDesc" rows="4" placeholder="What to study, key concepts, goals…"></textarea>
+      <label class="modal-label">Resources</label>
+      <div class="resources-list" id="resourcesList"></div>
+      <button class="btn-add-resource" id="addResourceBtn">+ Add Resource</button>
+      <div class="modal-footer">
+        <button class="btn-save" id="modalSave">Save Card</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
