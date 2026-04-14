@@ -218,9 +218,7 @@ const SEED_CARDS = [
     {label: 'Platform Engineering Org: Career Paths', url: 'https://platformengineering.org/blog/from-devops-to-platform-engineering'},
     {label: 'LinkedIn: Headline Best Practices', url: 'https://www.linkedin.com/business/talent/blog/product-tips/how-to-write-a-linkedIn-headline'}
   ]},
-  { id: uid(), col: 'todo', subject: 'Branding', title: 'Day 37: Summary Section Rewrite', desc: 'Final polish: Lead with your 6+ years experience plus specific new automation projects.', time: '1h', priority: 'high', resources: [
-    {label: 'Source Plan', url: R.sourceDoc}
-  ]},
+  { id: uid(), col: 'todo', subject: 'Branding', title: 'Day 37: Summary Section Rewrite', desc: 'Final polish: Lead with your 6+ years experience plus specific new automation projects.', time: '1h', priority: 'high', resources: [] },
   { id: uid(), col: 'todo', subject: 'Branding', title: 'Day 38: Resume Bullet Audit', desc: 'Final pass on all bullets. Ensure "Action + System + Impact" for new skills.', time: '1h', priority: 'medium', resources: [
     {label: 'Resume Verbs for Engineers', url: 'https://www.careercup.com/resume'}
   ]},
